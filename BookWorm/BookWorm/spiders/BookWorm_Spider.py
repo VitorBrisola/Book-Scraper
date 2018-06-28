@@ -15,4 +15,4 @@ class BookWormSpider(scrapy.Spider):
 
         # resquest de paginas
 
-    pass
+        pass
