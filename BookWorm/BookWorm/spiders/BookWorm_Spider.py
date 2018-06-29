@@ -11,7 +11,13 @@ class BookWormSpider(scrapy.Spider):
 
     def parse(self, response):
     
-        # extrair informacoes de livros (nome,descricao e preco)
+        # [pt] extraindo informacoes de livros (nome,descricao e preco)
+        # [eng] extracting book informations (name, description and price)
+        yield{
+            # [pt] tentando extrair o titulo de qualquer link de livro da amazon por Xpath - NAO ESTA FUNCINANDO AINDA
+            # [eng] trying to extract book titles from amazon with xpath - ITS NOT WORKING YET
+            'Title' : response.xpath("//li[@class = 'acswidget-carousel-redesign__card']/span").extract_first()
+        }        
 
         # resquest de paginas
 
