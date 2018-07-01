@@ -5,20 +5,28 @@ logging.getLogger('scrapy').setLevel(logging.WARNING)
 
 class BookWormSpider(scrapy.Spider):
     name = "BookWorm"
-    start_urls = [
-        'https://www.amazon.com.br/Livros/b/ref=nav__books_all?ie=UTF8&node=6740748011'
+    start_urls = [ 
+        # [pt] Inicialmente em uma categoria especifica, depois descobrir como entrar uma cateria pela entrada do usuario
+        # [eng] As our first step we are starting with a specific category, in the near future the category will be determined by users 
+        'https://www.ciadoslivros.com.br/livros-de-autoajuda'
     ]
 
     def parse(self, response):
     
         # [pt] extraindo informacoes de livros (nome,descricao e preco)
         # [eng] extracting book informations (name, description and price)
-        yield{
-            # [pt] tentando extrair o titulo de qualquer link de livro da amazon por Xpath - NAO ESTA FUNCINANDO AINDA
-            # [eng] trying to extract book titles from amazon with xpath - ITS NOT WORKING YET
-            'Title' : response.xpath("//li[@class = 'acswidget-carousel-redesign__card']/span").extract_first()
-        }        
+
+        for title in (response.xpath('//h3/a/@title').extract()):
+            yield{
+                'Title' : title.encode('utf-8')
+            }        
+        pass
 
         # resquest de paginas
 
         pass
+
+# ainda nao consegui resolve-los, talvez seja melhor tentar com outro site
+# ultimos xpath teste
+#li[@class = "a-carousel-card acswidget-carousel__card"]
+#h2[@class = 'a-spacing-mini acswidget-carousel__header']
