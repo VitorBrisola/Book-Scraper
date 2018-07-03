@@ -16,17 +16,16 @@ class BookWormSpider(scrapy.Spider):
         # [pt] extraindo informacoes de livros (nome,descricao e preco)
         # [eng] extracting book informations (name, description and price)
 
-        for title in (response.xpath('//h3/a/@title').extract()):
+        for book in response.xpath('//li[contains(@class,"product")]'):
             yield{
-                'Title' : title.encode('utf-8')
+                # [pt] Extraindo o nome do livro
+                # [eng] Extracting the book name
+                'Title' : book.xpath('div/h3/a/@title').extract() #.encode('utf-8')
+                                
             }        
         pass
 
         # resquest de paginas
 
-        pass
+    pass
 
-# ainda nao consegui resolve-los, talvez seja melhor tentar com outro site
-# ultimos xpath teste
-#li[@class = "a-carousel-card acswidget-carousel__card"]
-#h2[@class = 'a-spacing-mini acswidget-carousel__header']
