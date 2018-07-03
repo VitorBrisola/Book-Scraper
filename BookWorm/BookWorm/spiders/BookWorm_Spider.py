@@ -13,15 +13,14 @@ class BookWormSpider(scrapy.Spider):
 
     def parse(self, response):
     
-        # [pt] extraindo informacoes de livros (nome,descricao e preco)
-        # [eng] extracting book informations (name, description and price)
-
-        for book in response.xpath('//li[contains(@class,"product")]'):
+        # [pt] extraindo informacoes de livros (nome,autor e preco)
+        # [eng] extracting book informations (name, author and price)
+        for book in response.xpath('//li[contains(@class,"product")]/div'):
             yield{
-                # [pt] Extraindo o nome do livro
-                # [eng] Extracting the book name
-                'Title' : book.xpath('div/h3/a/@title').extract() #.encode('utf-8')
-                                
+                'Title' : book.xpath('h3/a/@title').extract(), #.encode('utf-8')
+                #'Author' : book.xpath('div[1]/a/text()').extract(),
+                #'Price'  : book.xpath('div[@class = "info"]').extract(),
+
             }        
         pass
 
