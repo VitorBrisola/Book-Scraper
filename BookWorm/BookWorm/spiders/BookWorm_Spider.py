@@ -20,12 +20,12 @@ class BookWormSpider(scrapy.Spider):
                 'Title' : ''.join(book.xpath('h3/a/@title').extract()).encode('utf-8'),
                 # Aplicar regex para tirar a parte de "ver mais livros de :" quando extrair
                 'Author' : ''.join(book.xpath('div[1]/a/@title').extract()),
-                # precisa completar o xpath 
                 'Price'  : ''.join(book.xpath('div[@class = "info"]/div/div/strong[@class = "sale-price"]/span/text()').extract()),
             }        
         pass
 
         # resquest de paginas
-
+        for a in (response.xpath('//a[@class = "page-next"]/@href')):
+            yield response.follow(a, callback=self.parse)
     pass
 
