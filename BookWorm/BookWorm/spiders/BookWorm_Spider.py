@@ -17,10 +17,11 @@ class BookWormSpider(scrapy.Spider):
         # [eng] extracting book informations (name, author and price)
         for book in response.xpath('//li[contains(@class,"product")]/div'):
             yield{
-                'Title' : book.xpath('h3/a/@title').extract(), #.encode('utf-8')
-                #'Author' : book.xpath('div[1]/a/text()').extract(),
-                #'Price'  : book.xpath('div[@class = "info"]').extract(),
-
+                'Title' : ''.join(book.xpath('h3/a/@title').extract()).encode('utf-8'),
+                # Aplicar regex para tirar a parte de "ver mais livros de :" quando extrair
+                'Author' : ''.join(book.xpath('div[1]/a/@title').extract()),
+                # precisa completar o xpath 
+                'Price'  : ''.join(book.xpath('div[@class = "info"]/div/div/strong[@class = "sale-price"]/span/text()').extract()),
             }        
         pass
 
